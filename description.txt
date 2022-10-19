@@ -1,0 +1,1 @@
+Master Mode drops in Expert Mode is pretty simple, any drops that are master mode exclusive now also drop in expert mode
