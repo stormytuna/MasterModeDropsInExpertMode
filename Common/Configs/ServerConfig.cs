@@ -18,6 +18,11 @@ namespace MasterModeDropsInExpertMode.Common.Configs {
         [ReloadRequired]
         public bool DropRelics { get; set; }
 
+        [Label("Master tooltip replaced with Expert tooltip")]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool FixTooltips { get; set; }
+
         [Label("Pets have 100% drop chance")]
         [DefaultValue(true)]
         [ReloadRequired]
