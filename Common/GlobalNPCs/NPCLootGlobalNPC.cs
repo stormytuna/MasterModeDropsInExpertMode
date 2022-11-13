@@ -45,7 +45,9 @@ namespace MasterModeDropsInExpertMode.Common.GlobalNPCs {
                                 if (!ServerConfig.Instance.MasterToExpertBlacklist.Contains(new ItemDefinition(name))) {
                                     // Add and remove since the original rule is a DropBasedOnMasterMode drop
                                     int denom = ServerConfig.Instance.GuaranteedPets ? 1 : twinsDrop.chanceDenominator;
-                                    npcLoot.Add(new DropPerPlayerOnThePlayer(twinsDrop.itemId, denom, twinsDrop.amountDroppedMinimum, twinsDrop.amountDroppedMaximum, new Conditions.IsExpert()));
+                                    LeadingConditionRule newRule = new LeadingConditionRule(new Conditions.MissingTwin());
+                                    newRule.OnSuccess(new DropPerPlayerOnThePlayer(twinsDrop.itemId, denom, twinsDrop.amountDroppedMinimum, twinsDrop.amountDroppedMaximum, new Conditions.IsExpert()));
+                                    npcLoot.Add(newRule);
                                     npcLoot.Remove(twinsDrop);
                                 }
                             }
@@ -68,7 +70,9 @@ namespace MasterModeDropsInExpertMode.Common.GlobalNPCs {
                                 if (!ServerConfig.Instance.MasterToExpertBlacklist.Contains(new ItemDefinition(name))) {
                                     // Add and remove since the original rule is a DropBasedOnMasterMode drop
                                     int denom = ServerConfig.Instance.GuaranteedPets ? 1 : eaterDrop.chanceDenominator;
-                                    npcLoot.Add(new DropPerPlayerOnThePlayer(eaterDrop.itemId, denom, eaterDrop.amountDroppedMinimum, eaterDrop.amountDroppedMaximum, new Conditions.IsExpert()));
+                                    LeadingConditionRule newRule = new LeadingConditionRule(new Conditions.LegacyHack_IsABoss());
+                                    newRule.OnSuccess(new DropPerPlayerOnThePlayer(eaterDrop.itemId, denom, eaterDrop.amountDroppedMinimum, eaterDrop.amountDroppedMaximum, new Conditions.IsExpert()));
+                                    npcLoot.Add(newRule);
                                     npcLoot.Remove(eaterDrop);
                                 }
                             }
