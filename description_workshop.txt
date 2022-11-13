@@ -1,1 +1,3 @@
-Master Mode drops in Expert Mode is pretty simple, any drops that are master mode exclusive now also drop in expert mode
+Master Mode Drops in Expert Mode is pretty simple, it just allows relics and pets to drop in expert mode. It works with all vanilla bosses and should work with most modded bosses
+
+To report any bugs or give feedback, you can post a comment on the Steam Workshop or message me on Discord (stormytuna#2688). You can report bugs using GitHub issues as well.
