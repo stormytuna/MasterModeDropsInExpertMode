@@ -1,3 +1,10 @@
 Master Mode Drops in Expert Mode is pretty simple, it just allows relics and pets to drop in expert mode. It works with all vanilla bosses and should work with most modded bosses
 
+This mod also has an extensive config, allowing you to:
+ - Toggle pets and relics independently
+ - Toggle them dropping in Expert and Classic mode independently
+ - Have the 'Master' tooltip and rarity be updated based on whether it can drop in Expert or Classic
+ - Change pets to have a 100% drop chance
+ - Add items to a blacklist to prevent them being converted to Expert or Classic
+
 To report any bugs or give feedback, you can post a comment on the Steam Workshop or message me on Discord (stormytuna#2688). You can report bugs using GitHub issues as well.
