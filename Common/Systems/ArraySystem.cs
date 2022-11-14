@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace MasterModeDropsInExpertMode.Common.Systems {
     public class ArraySystem : ModSystem {
-        public static List<int> NewExpertDrops { get; private set; }
+        public static List<int> NewExpertDrops { get; private set; } = new();
 
         public override void Unload() {
             NewExpertDrops = null;
