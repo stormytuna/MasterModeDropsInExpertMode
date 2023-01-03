@@ -1,7 +1,7 @@
 author = stormytuna
-displayName = Master Mode drops in Expert Mode
+displayName = Master Mode drops in Any Mode
 homepage = https://github.com/stormytuna/MasterModeDropsInExpertMode
 hideCode = false
 hideResources = false
 includeSource = true
-version = 1.0.1
+version = 1.0.3

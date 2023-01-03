@@ -28,6 +28,12 @@ namespace MasterModeDropsInExpertMode.Common.Configs {
         [ReloadRequired]
         public bool DropRelicsClassic { get; set; }
 
+        [Label("Empress of Light only drops at daytime")]
+        [Tooltip("This will make Empress of Light only drop relics and pets when killed during the day instead of all the time")]
+        [DefaultValue(false)]
+        [ReloadRequired]
+        public bool EmpressDropsDaytimeOnly { get; set; }
+
         [Label("Replace Master only information")]
         [Tooltip("In Expert, the 'Master' tooltip and rarity are replaced with Expert versions\nIn Classic, the 'Master' tooltip is removed and the rarity is changed to Green or Light Purple")]
         [DefaultValue(true)]

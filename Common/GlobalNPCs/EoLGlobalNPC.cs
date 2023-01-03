@@ -1,4 +1,4 @@
-using MasterModeDropsInExpertMode.Common.Configs;
+﻿using MasterModeDropsInExpertMode.Common.Configs;
 using MasterModeDropsInExpertMode.Common.Systems;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -7,48 +7,48 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace MasterModeDropsInExpertMode.Common.GlobalNPCs {
-    public class NPCLootGlobalNPC : GlobalNPC {
+    public class EoLGlobalNPC : GlobalNPC {
+        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.HallowBoss && ServerConfig.Instance.EmpressDropsDaytimeOnly;
+
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
-            if (npc.ModNPC?.Mod.Name == "CalamityMod") {
-                return;
-            }
-
-            if (npc.type == NPCID.HallowBoss && ServerConfig.Instance.EmpressDropsDaytimeOnly) {
-                return;
-            }
-
             foreach (var rule in npcLoot.Get()) {
-                // Should get most relics
                 if (rule is ItemDropWithConditionRule withConditionRule && withConditionRule.condition is Conditions.IsMasterMode) {
                     if (ItemID.Search.TryGetName(withConditionRule.itemId, out string name)) {
                         if (!ServerConfig.Instance.MasterToExpertBlacklist.Contains(new ItemDefinition(name))) {
+                            LeadingConditionRule newRule = new LeadingConditionRule(new Conditions.EmpressOfLightIsGenuinelyEnraged());
+
                             if (ServerConfig.Instance.DropRelicsClassic) {
-                                withConditionRule.condition = new Conditions.NotMasterMode();
+                                newRule.OnSuccess(new ItemDropWithConditionRule(withConditionRule.itemId, withConditionRule.chanceDenominator, withConditionRule.amountDroppedMinimum, withConditionRule.amountDroppedMaximum, new Conditions.NotMasterMode()));
+                                npcLoot.Add(newRule);
+                                npcLoot.Remove(withConditionRule);
                             }
 
                             else if (ServerConfig.Instance.DropRelicsExpert) {
-                                withConditionRule.condition = new Conditions.IsExpert();
+                                newRule.OnSuccess(new ItemDropWithConditionRule(withConditionRule.itemId, withConditionRule.chanceDenominator, withConditionRule.amountDroppedMinimum, withConditionRule.amountDroppedMaximum, new Conditions.IsExpert()));
+                                npcLoot.Add(newRule);
+                                npcLoot.Remove(withConditionRule);
                             }
 
                             ArraySystem.RegisterNewRelic(withConditionRule.itemId);
                         }
                     }
                 }
-
-                // Should get most pets
                 if (rule is DropBasedOnMasterMode masterDrop && masterDrop.ruleForMasterMode is DropPerPlayerOnThePlayer dropPerPlayer) {
                     if (ItemID.Search.TryGetName(dropPerPlayer.itemId, out string name)) {
                         if (!ServerConfig.Instance.MasterToExpertBlacklist.Contains(new ItemDefinition(name))) {
                             // Add and remove since the original rule is a DropBasedOnMasterMode drop
                             int denom = ServerConfig.Instance.GuaranteedPets ? 1 : dropPerPlayer.chanceDenominator;
+                            LeadingConditionRule newRule = new LeadingConditionRule(new Conditions.EmpressOfLightIsGenuinelyEnraged());
 
                             if (ServerConfig.Instance.DropPetsClassic) {
-                                npcLoot.Add(new DropPerPlayerOnThePlayer(dropPerPlayer.itemId, denom, dropPerPlayer.amountDroppedMinimum, dropPerPlayer.amountDroppedMaximum, new Conditions.NotMasterMode()));
+                                newRule.OnSuccess(new DropPerPlayerOnThePlayer(dropPerPlayer.itemId, denom, dropPerPlayer.amountDroppedMinimum, dropPerPlayer.amountDroppedMaximum, new Conditions.NotMasterMode()));
+                                npcLoot.Add(newRule);
                                 npcLoot.Remove(dropPerPlayer);
                             }
 
                             else if (ServerConfig.Instance.DropPetsExpert) {
-                                npcLoot.Add(new DropPerPlayerOnThePlayer(dropPerPlayer.itemId, denom, dropPerPlayer.amountDroppedMinimum, dropPerPlayer.amountDroppedMaximum, new Conditions.IsExpert()));
+                                newRule.OnSuccess(new DropPerPlayerOnThePlayer(dropPerPlayer.itemId, denom, dropPerPlayer.amountDroppedMinimum, dropPerPlayer.amountDroppedMaximum, new Conditions.IsExpert()));
+                                npcLoot.Add(newRule);
                                 npcLoot.Remove(dropPerPlayer);
                             }
 
